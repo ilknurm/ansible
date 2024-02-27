@@ -1,0 +1,29 @@
+- name: Copy files
+  hosts: worker
+  tasks:
+    - name: Copy hello.txt to worker node
+      copy: 
+        src: /home/hello.txt
+        dest: /opt/hello.txt
+      become: true
+      become_user: root
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: /home/configs
+        state: directory
+        mode: '0755'    
+      become: true
+      become_user: root
+    - name: Copy install docker script
+      ansible.builtin.copy:
+        src: /home/ec2-user/ansible1/ansible/node01/install-docker.sh
+        dest: /home/configs
+        owner: root
+        group: root
+        mode: '0755'
+      become: true
+      become_user: root 
+    - name: Run bash script
+      shell: sh /home/configs/install-docker.sh
+      become: true
+      become_user: root

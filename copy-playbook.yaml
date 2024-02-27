@@ -1,9 +1,0 @@
-- name: Copy files
-  hosts: worker
-  tasks:
-   - name: Copy files to worker node
-     copy:
-       src: /home/hello.txt
-       dest: /opt/hello.txt
-     become: true
-     become_user: root
